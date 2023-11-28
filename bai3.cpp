@@ -1,74 +1,59 @@
 #include <iostream>
 #include <vector>
-#include <string>
+#include <algorithm>
 
 using namespace std;
 
-class TimBieuThuc {
-public:
-    string timBieuThuc(vector<long long>& daySo, long long tongMucTieu) {
-        string toanTu = "-~+.";
-        string ketQua;
-        if (taoBieuThuc(daySo, tongMucTieu, 0, "", toanTu, ketQua)) {
-            return ketQua;
-        } else {
-            return "impossible";
-        }
-    }
-
+class TraCuuMaxTrongDoan {
 private:
-    bool tinhBieuThuc(vector<long long>& daySo, string& bieuThuc, long long tongMucTieu) {
-        long long ketQua = daySo[0];
-        int j = 0;
-        for (int i = 0; i < bieuThuc.length(); ++i) {
-            if (bieuThuc[i] == '+') {
-                ketQua += daySo[j + 1];
-            } else if (bieuThuc[i] == '-') {
-                ketQua -= daySo[j + 1];
-            } else if (bieuThuc[i] == '~') {
-                ketQua = -daySo[j + 1];
-            } else if (bieuThuc[i] == '.') {
-                ketQua = ketQua * 10 + daySo[j + 1];
-            }
-            j++;
-        }
-        return ketQua == tongMucTieu;
+    vector<int> mang;  // Mang chua cac phan tu
+
+public:
+    TraCuuMaxTrongDoan(int n) {
+        mang.resize(n, 0);  // Khoi tao mang voi n phan tu, gia tri ban dau la 0
     }
 
-    bool taoBieuThuc(vector<long long>& daySo, long long tongMucTieu, int viTriHienTai, string bieuThucHienTai, string& toanTu, string& ketQua) {
-        if (viTriHienTai == daySo.size() - 1) {
-            if (tinhBieuThuc(daySo, bieuThucHienTai, tongMucTieu)) {
-                ketQua = bieuThucHienTai;
-                return true;
-            }
-            return false;
+    void capNhatDoan(int u, int v, int k) {
+        mang[u] += k;  // Tang gia tri cua phan tu u len k don vi
+        if (v + 1 < mang.size()) {
+            mang[v + 1] -= k;  // Giam gia tri cua phan tu v+1 di k don vi
         }
+    }
 
-        for (int i = 0; i < toanTu.length(); ++i) {
-            string bieuThucMoi = bieuThucHienTai + toanTu[i];
-            if (taoBieuThuc(daySo, tongMucTieu, viTriHienTai + 1, bieuThucMoi, toanTu, ketQua)) {
-                return true;
-            }
+    int timMaxTrongDoan(int n) {
+        int max_value = mang[0];
+        int current_value = mang[0];
+        for (int i = 1; i < n; i++) {
+            current_value += mang[i];
+            max_value = max(max_value, current_value);
         }
-
-        return false;
+        return max_value;
     }
 };
 
 int main() {
-    int N;
-    long long S;
-    cin >> N >> S;
+    int n, m;
+    cin >> n >> m;
 
-    vector<long long> daySo(N);
-    for (int i = 0; i < N; ++i) {
-        cin >> daySo[i];
+    TraCuuMaxTrongDoan tracuu(n);
+
+    // Doc cac phep bien doi va cap nhat gia tri cua mang
+    for (int i = 0; i < m; i++) {
+        int u, v, k;
+        cin >> u >> v >> k;
+        tracuu.capNhatDoan(u - 1, v - 1, k);  // Chuyen tu 1-indexed sang 0-indexed
     }
 
-    TimBieuThuc timKiem;
-    string ketQua = timKiem.timBieuThuc(daySo, S);
+    int p;
+    cin >> p;
 
-    cout << ketQua << endl;
+    // Doc va tra loi cac cau hoi
+    for (int i = 0; i < p; i++) {
+        int u, v;
+        cin >> u >> v;
+        int max_value = tracuu.timMaxTrongDoan(v);  // Truy van gia tri lon nhat trong doan tu 0 den v
+        cout << max_value << endl;
+    }
 
     return 0;
 }
