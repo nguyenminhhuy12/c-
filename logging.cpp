@@ -76,7 +76,6 @@ int main() {
     Matrix resultAddition = matrix1 + matrix2;
     Matrix resultSubtraction = matrix1 - matrix2;
     Matrix resultMultiplication = matrix1 * matrix2;
-    //Matrix resultDivision = matrix1 / matrix2; // Chia ma tran co the khong phai luc nao cung co giai phap
 
     return 0;
 }
