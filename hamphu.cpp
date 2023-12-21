@@ -47,22 +47,6 @@ void taokhungchoBDmuonSach()
 	cout << setw(80) << '-' << endl;
 	cout << setfill(' ');
 }
-//void taokhungchobangmuonsach()
-//{
-//	cout << setfill('-');
-//	cout << setw(130) << '-' << endl;
-//	cout << setfill(' ');
-//	cout << setw(74) << right << "DANH SACH MUON SACH" << endl;
-//	cout << setfill('-');
-//	cout << setw(130) << '-' << endl;
-//	cout << setfill(' ');	
-//	cout << setw(10) << left << "Ma Ban Doc" << setw(20) << left << "Ho Ten";
-//	cout << setw(10) << left << "Ma Sach" << setw(20) << left << "Ten Sach";
-//	cout << setw(20) << left << "Ngay Muon" << setw(20) << left << "Ngay Tra";
-//	cout << endl;
-//	cout << setfill('-');
-//	cout << setw(130) << '-' << endl;
-//	cout << setfill(' ');
-//};
+
 
 
